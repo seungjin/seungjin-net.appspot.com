@@ -40,7 +40,9 @@ public class MemoReaderServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             PersistenceManager pm = PMF.get().getPersistenceManager();
+            //Query query = pm.newQuery(Memo.class);
             Query query = pm.newQuery(Memo.class);
+            query.setFilter("status == 1");
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
             out.println("<?xml-stylesheet type=\"text/xsl\" href=\"/memoRead.xsl\"?>");
             try {
