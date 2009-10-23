@@ -51,7 +51,7 @@ public class DataImport {
        StringBuilder sb = new StringBuilder();
 
         try {
-            URL url = new URL("http://dl.getdropbox.com/u/1737059/www.seungjin.net/data/contents.xml");
+            URL url = new URL("http://dl.getdropbox.com/u/1737059/www.seungjin.net/data/contentswithouthidden.xml");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(),"UTF8"));
             String line;
 
@@ -100,84 +100,96 @@ public class DataImport {
 
     public void importAction() {
 
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+
         try {
-            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            //Document doc = docBuilder.parse (new File("book.xml"));
+            //Using factory get an instance of document builder
+            DocumentBuilder db = dbf.newDocumentBuilder();
 
             ByteArrayInputStream bs = new ByteArrayInputStream(this.source.getBytes("UTF8"));
 
-            Document doc = docBuilder.parse(bs);
+            //parse using builder to get DOM representation of the XML file
+            Document dom = db.parse(bs);
 
-            doc.getDocumentElement ().normalize();
-            System.out.println ("Root element of the doc is " + doc.getDocumentElement().getNodeName());
+            Element docElement = dom.getDocumentElement();
 
-            NodeList listOfContents = doc.getElementsByTagName("content");
-            int totalPersons = listOfContents.getLength();
-            System.out.println("Total no of people : " + totalPersons);
+            NodeList nl = docElement.getElementsByTagName("content");
 
-            for(int s=0; s<listOfContents.getLength() ; s++){
-                System.out.println("#"+s);
-                System.out.println("#?"+listOfContents.getLength());
-                
-                Node firstContentNode = listOfContents.item(s);
+            String date = new String();
+            String time = new String();
+            String timezone = new String();
+            String category = new String();
+            String comment = new String();
+            String ref = new String();
 
-                if(firstContentNode.getNodeType() == Node.ELEMENT_NODE){
-                    
-                    Element firstContentElement = (Element)firstContentNode;
-                    //System.out.println(firstContentElement.);
-                    
-                    //-------
-                    NodeList dateList = firstContentElement.getElementsByTagName("date");
-                    Element dateElement = (Element)dateList.item(0);
+            if(nl != null && nl.getLength() > 0) {
+                for(int i = 0 ; i < nl.getLength();i++) {
+                    Element el = (Element)nl.item(i);
 
-                    NodeList textDateList = dateElement.getChildNodes();
-                    System.out.println(((Node)textDateList.item(0)).getNodeValue().trim());
-
-                    //-------
-                    NodeList timeList = firstContentElement.getElementsByTagName("time");
-                    Element timeElement = (Element)timeList.item(0);
-
-                    NodeList textTimeList = timeElement.getChildNodes();
-                    System.out.println(((Node)textTimeList.item(0)).getNodeValue().trim());
-
-                    //-------
-                    NodeList timezoneList = firstContentElement.getElementsByTagName("timezone");
-                    Element timezoneElement = (Element)timezoneList.item(0);
-
-                    NodeList textTimezoneList = timezoneElement.getChildNodes();
-                    System.out.println(((Node)textTimezoneList.item(0)).getNodeValue().trim());
-
-                    //-------
-                    NodeList categoryList = firstContentElement.getElementsByTagName("category");
-                    Element categoryElement = (Element)categoryList.item(0);
-
-                    NodeList textCategoryList = categoryElement.getChildNodes();
-                    System.out.println(((Node)textCategoryList.item(0)).getNodeValue().trim());
-
-                    //-------
-                    NodeList commentList = firstContentElement.getElementsByTagName("comment");
-                    Element commentElement = (Element)commentList.item(0);
-
-                    NodeList textCommentList = commentElement.getChildNodes();
-                    System.out.println(((Node)textCommentList.item(0)).getNodeValue().trim());
-                    /*
-                    //-------
-                    NodeList refList = firstContentElement.getElementsByTagName("ref");
-                    Element refElement = (Element)refList.item(0);
-                    NodeList textRefList = refElement.getChildNodes();
-                    if ((Node)textRefList.item(0) != null ) {
-                        System.out.println(((Node)textRefList.item(0)).getNodeValue().trim());
+                    if ( el.getElementsByTagName("date").item(0).equals(null) ) {
+                        date = "null";
                     } else {
-                        System.out.println("%%");
+                        date = el.getElementsByTagName("date").item(0).getFirstChild().getNodeValue();
                     }
-                    */
 
-                }//end of if clause
-                
+                    if ( el.getElementsByTagName("category").item(0).equals(null) ) {
+                        category = "null";
+                    } else {
+                        category = el.getElementsByTagName("category").item(0).getFirstChild().getNodeValue();
+                    }
 
-            }//end of for loop with s var
-           
+                    if ( el.getElementsByTagName("comment").item(0).equals(null) ) {
+                        comment = "null";
+                    } else {
+                        comment = el.getElementsByTagName("comment").item(0).getFirstChild().getNodeValue();
+                    }
+
+
+                    ////////////
+                    
+                    try { 
+                        time = el.getElementsByTagName("time").item(0).getFirstChild().getNodeValue();
+                    } catch (Exception e) {
+                        time = "null";
+                    }
+
+                    try {
+                        timezone = el.getElementsByTagName("timezone").item(0).getFirstChild().getNodeValue();
+                    } catch (Exception e) {
+                        timezone = "null";
+                    }
+
+                    try {
+                        ref = el.getElementsByTagName("ref").item(0).getFirstChild().getNodeValue();
+                    } catch (Exception e) {
+                        ref = "null";
+                    }
+                    
+                    System.out.println("-");
+                    System.out.println(date);
+                    System.out.println(time);
+                    System.out.println(timezone);
+                    System.out.println(comment);
+                    System.out.println(ref);
+                    System.out.println("-");
+
+
+
+
+                    PersistenceManager pm = PMF.get().getPersistenceManager();
+                    Journal c = new Journal(category, comment, ref);
+                    try {
+                        pm.makePersistent(c);
+                        System.out.println("inserting...");
+                    } finally {
+                        pm.close();
+                    }
+
+
+                }
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

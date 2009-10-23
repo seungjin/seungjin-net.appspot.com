@@ -24,6 +24,12 @@ import java.util.Iterator;
 
 import java.util.Enumeration;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 /**
  *
  * @author seungjin
@@ -39,9 +45,28 @@ public class RootServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+
+            try {
+                URL url = new URL("http://dl.getdropbox.com/u/1737059/www.seungjin.net/data/contents.xml");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(),"UTF8"));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    // ...
+                    out.print(line);
+                }
+                reader.close();
+
+            } catch (MalformedURLException e) {
+                // ...
+            } catch (IOException e) {
+            // ...
+            }
+
+            /*
             // TODO output your page here
             out.println("<pre>");
             out.println("not ready yet");
@@ -78,23 +103,8 @@ public class RootServlet extends HttpServlet {
             
             out.println("</pre>");
             
-
-            //out.println(request.getRequestURI());
-            //out.println(request.getParameter("jk"));
-
-            /*
-            
-            Employee e = new Employee("Alfred", "Smith", new Date());
-            PersistenceManager pm = PMF.get().getPersistenceManager();
-
-            try {
-                 pm.makePersistent(e);
-            } finally {
-                pm.close();
-            }
-
-            out.println("end?");
             */
+            
 
         } finally { 
             out.close();

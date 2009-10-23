@@ -16,9 +16,10 @@ import javax.jdo.PersistenceManager;
 import java.util.List;
 import javax.jdo.Query;
 
-import net.seungjin.appspot.Memo;
-
 import com.google.appengine.api.datastore.Text;
+
+import net.seungjin.appspot.Memo;
+import net.seungjin.appspot.DataImport;
 
 /**
  *
@@ -35,12 +36,13 @@ public class MemoReaderServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/xml;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             PersistenceManager pm = PMF.get().getPersistenceManager();
             Query query = pm.newQuery(Memo.class);
-
+            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
+            out.println("<?xml-stylesheet type=\"text/xsl\" href=\"/memoRead.xsl\"?>");
             try {
                 List<Memo> results = (List<Memo>) query.execute();
                 out.println("<memos>");
@@ -55,6 +57,11 @@ public class MemoReaderServlet extends HttpServlet {
                     }
                 }
                 out.println("</memos>");
+
+                //DataImport di = new DataImport();
+                //di.importAction();
+
+
             } finally {
                 query.closeAll();
             }

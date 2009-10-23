@@ -12,6 +12,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Text;
+import com.google.appengine.api.datastore.Blob;
+
 /**
  *
  * @author seungjin
@@ -29,15 +32,21 @@ public class Journal {
     private String tag;
 
     @Persistent
-    private String comment;
+    private Text comment;
 
     @Persistent
     private String ref;
 
-    public Journal(String comment, String ref, String tag) {
+    @Persistent
+    private Blob attachement;
+
+    @Persistent
+    private String protocol;
+
+    public Journal(String tag, String comment, String ref) {
         //this.date = date;
         this.tag = tag;
-        this.comment = comment;
+        this.comment = new Text(comment);
         this.ref = ref;
     }
 
@@ -64,11 +73,11 @@ public class Journal {
     }
 
     public String getComment() {
-        return comment;
+        return comment.getValue();
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.comment = new Text(comment);
     }
 
     public String getRef() {

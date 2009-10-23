@@ -7,6 +7,8 @@
         <include path="/**.jpg"/>
         <include path="/**.html"/>
         <include path="/**.ico"/>
+        <include path="/**.xsl"/>
+        <include path="/robots.txt"/>
         <include path="/images/*"/>
         <include path="/styles/*"/>
         <include path="/scripts/*"/>
