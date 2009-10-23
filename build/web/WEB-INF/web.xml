@@ -84,7 +84,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MobileMemosWriterServlet</servlet-name>
-        <url-pattern>/mobile/memos/write/*</url-pattern>
+        <url-pattern>/mobile/memo/write/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
