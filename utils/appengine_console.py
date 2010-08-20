@@ -1,3 +1,5 @@
+#!/opt/local/bin/python2.5
+
 import code
 import getpass
 import sys
