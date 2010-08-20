@@ -1,7 +1,7 @@
 
 import os
 import cgi
-import time
+import datetime
 
 import settings
 
@@ -19,7 +19,7 @@ class Journal(webapp.RequestHandler) :
 
     #self.response.headers['Content-Type'] = 'text/plain'
     template_values = {
-      'date': time.time(),
+      'date': datetime.datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y"),
     }
     path = os.path.join(settings.APP_ROOT_PATH,"./templates/journal.html")
     self.response.out.write(template.render(path, template_values))

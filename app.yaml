@@ -5,11 +5,12 @@ api_version: 1
 
 handlers:
 - url: /media
-  static_dir: media
-
-- url: /.*
-  script: view.py
+  static_dir: media  
 
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
+
+- url: /.*
+  script: view.py
+
