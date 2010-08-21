@@ -2,6 +2,7 @@
 import os
 import cgi
 import datetime
+import logging
 
 import settings
 
@@ -13,9 +14,15 @@ from models.tables import *
   
 class Journal(webapp.RequestHandler) :
   def get(self):
+
+    print "aaaa"
+    logging.debug("aa")
+    
     journals = db.GqlQuery("SELECT * FROM Journals")
     for journal in journals :
       print journal
+
+
 
     #self.response.headers['Content-Type'] = 'text/plain'
     template_values = {
