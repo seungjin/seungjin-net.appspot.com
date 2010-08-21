@@ -14,15 +14,12 @@ from models.tables import *
   
 class Journal(webapp.RequestHandler) :
   def get(self):
-
-    print "aaaa"
-    logging.debug("aa")
     
     journals = db.GqlQuery("SELECT * FROM Journals")
     for journal in journals :
       print journal
 
-
+    self.response.out.write(self.request.query_string)
 
     #self.response.headers['Content-Type'] = 'text/plain'
     template_values = {
@@ -30,3 +27,6 @@ class Journal(webapp.RequestHandler) :
     }
     path = os.path.join(settings.APP_ROOT_PATH,"./templates/journal.html")
     self.response.out.write(template.render(path, template_values))
+
+  def post(self):
+    print self.request
