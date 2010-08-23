@@ -3,7 +3,7 @@
 from google.appengine.ext import db
 
 class Journals(db.Model):
-  order = db.IntegerProperty()
+  rownum = db.IntegerProperty()
   date = db.DateProperty()
   time = db.TimeProperty()
   timezone = db.StringProperty()
@@ -53,6 +53,7 @@ class My_groips(db.Model):
 	referring_access_log_id = db.StringProperty()
 	
 class Shouts(db.Model):
+  rownum = db.IntegerProperty()
   message = db.TextProperty()
   #message = db.StringProperty(multiline=True)
   remote_addr = db.StringProperty()

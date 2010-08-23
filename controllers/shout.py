@@ -13,6 +13,7 @@ from google.appengine.ext.webapp import template
 from models.tables import *
   
 class Shout(webapp.RequestHandler) :
+
   def get(self):
     shouts = db.GqlQuery("SELECT * FROM Shouts ORDER BY created_at DESC")
     template_values = {
@@ -23,12 +24,22 @@ class Shout(webapp.RequestHandler) :
     self.response.out.write(template.render(path, template_values))
 
   def post(self):
+    
+    # need to start a transaction
+    q = db.GqlQuery("SELECT * FROM Shouts")
+    if q.count() == 0 :
+      rownum = 1
+    else :
+      rownum = 1 + q.count()
+     
     if self.request.get('message') != '' :
       shouts = Shouts()
-      shouts.uid = db.IntegerProperty()
+      shouts.rownum = rownum
       shouts.message = self.request.get('message').rstrip()
       shouts.publishing_code = 1
       shouts.remote_addr = self.request.remote_addr
       shouts.user_agent = self.request.headers['User-Agent']   
       shouts.put()
+    # need to end a transaction
+    
     self.redirect('/shout')
