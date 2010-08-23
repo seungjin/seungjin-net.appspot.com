@@ -3,7 +3,6 @@
 from google.appengine.ext import db
 
 class Journals(db.Model):
-  uid = db.IntegerProperty()
   date = db.DateProperty()
   time = db.TimeProperty()
   timezone = db.StringProperty()
@@ -13,9 +12,9 @@ class Journals(db.Model):
   body = db.TextProperty()
   ref = db.StringProperty(multiline=True)
   created_at = db.DateTimeProperty(auto_now_add=True)
+  updated_at = db.DateTimeProperty()
 
 class Access_logs(db.Model):
-  uid = db.IntegerProperty()
   timestamp = db.DateTimeProperty()
   timezone = db.StringProperty()
   remote_ip = db.StringProperty()
@@ -24,7 +23,6 @@ class Access_logs(db.Model):
   http_referer = db.StringProperty()
 
 class Received_emails(db.Model):
-	uid = db.IntegerProperty()
 	status = db.StringProperty()
 	mail_from = db.StringProperty()
 	mail_to = db.StringProperty()
@@ -32,10 +30,9 @@ class Received_emails(db.Model):
 	body = db.TextProperty()
 	rcf822 = db.TextProperty()
 	received_at = db.DateTimeProperty()
-	updated_at = db.DateTimeProperty()
+	created_at = db.DateTimeProperty()
 	
 class Guestbooks(db.Model):
-	uid = db.IntegerProperty()
 	name = db.StringProperty()
 	timestamp = db.DateTimeProperty()
 	timezone = db.StringProperty()
@@ -47,7 +44,6 @@ class Guestbooks(db.Model):
 	created_at = db.DateTimeProperty()
 
 class My_groips(db.Model):
-	uid = db.IntegerProperty()
 	remote_ip = db.StringProperty()
 	geo = db.StringProperty()
 	note = db.StringProperty()
@@ -57,6 +53,7 @@ class My_groips(db.Model):
 	
 class Shouts(db.Model):
   message = db.TextProperty()
+  #message = db.StringProperty(multiline=True)
   remote_addr = db.StringProperty()
   user_agent = db.StringProperty()
   publishing_code = db.IntegerProperty()

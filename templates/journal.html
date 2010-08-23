@@ -23,6 +23,10 @@
 	
 	<div id="journals">
 		
+		{% for journal in journals %}
+			{{ journal.comment }}
+		{% endfor %}
+		
 		<div id="journal">
 		<div id="date">2010.07.01</div> <div id="time">17:35</div> <div id="timezone">MST</div>
 		<div id="tag">[Scratch]</div>
