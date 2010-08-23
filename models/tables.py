@@ -3,6 +3,7 @@
 from google.appengine.ext import db
 
 class Journals(db.Model):
+  order = db.IntegerProperty()
   date = db.DateProperty()
   time = db.TimeProperty()
   timezone = db.StringProperty()
