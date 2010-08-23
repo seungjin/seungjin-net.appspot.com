@@ -55,12 +55,12 @@ class My_groips(db.Model):
 	timezone = db.StringProperty()
 	referring_access_log_id = db.StringProperty()
 	
-class Shout(db.Model):
-  uid = db.IntegerProperty()
-  message = db.StringProperty()
-  remote_ip = db.StringProperty()
+class Shouts(db.Model):
+  message = db.TextProperty()
+  remote_addr = db.StringProperty()
   user_agent = db.StringProperty()
-  created_at = db.DateTimeProperty()
+  publishing_code = db.IntegerProperty()
+  created_at = db.DateTimeProperty(auto_now=True)
   updated_at = db.DateTimeProperty()
   
   

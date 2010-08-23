@@ -19,8 +19,10 @@
       <input type=submit value="Shout!" class="submit" style="float:none; margin-left: 5px;" />
     </form>
     <div id="shouts">
-      
-      <pre>2010-08-23 05:55:33 UTC<br/>shout</pre>
+     
+      {% for shout in shouts %}
+		<pre>[{{ shout.created_at }} UTC]<br/>{{ shout.message }}</pre>
+	  {% endfor %}
     
     </div>
     <hr/>
