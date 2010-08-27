@@ -41,9 +41,8 @@ class Journal(webapp.RequestHandler) :
     access_logs.put()
     # need to end a transaction
     
-    
-    journals = db.GqlQuery("SELECT * FROM Journals")
-    self.response.out.write(self.request.query_string)
+    journals = db.GqlQuery("SELECT * FROM Journals WHERE publishing_code = 1 ORDER BY rownum DESC LIMIT 100")
+    #self.response.out.write(self.request.query_string)
 
     #self.response.headers['Content-Type'] = 'text/plain'
     template_values = {

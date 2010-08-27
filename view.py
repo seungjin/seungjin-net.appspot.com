@@ -5,6 +5,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from controllers.journal import Journal
 from controllers.util import Util
 from controllers.shout import Shout
+from controllers.dump import Dump
 
 application = webapp.WSGIApplication([
     (r'/',Journal),
@@ -13,6 +14,7 @@ application = webapp.WSGIApplication([
     (r'/shout', Shout),
     (r'/shout/(.*)', Shout),
     (r'/util', Util),
+    #(r'/dump', Dump),
 ], debug=True) 
 
 def main():

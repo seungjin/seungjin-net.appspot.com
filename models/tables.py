@@ -4,11 +4,11 @@ from google.appengine.ext import db
   
 class Journals(db.Model):
   rownum = db.IntegerProperty()
-  date = db.DateProperty()
-  time = db.TimeProperty()
+  date = db.StringProperty()
+  time = db.StringProperty()
   timezone = db.StringProperty()
   tag = db.StringProperty(multiline=True)
-  subject = db.StringProperty(multiline=True)
+  subject = db.TextProperty()
   publishing_code = db.IntegerProperty()
   body = db.TextProperty()
   ref = db.StringProperty(multiline=True)

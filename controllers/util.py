@@ -1,3 +1,5 @@
+#!/usr/env python
+# -*- coding: utf-8 -*-
 
 import os
 import cgi
@@ -16,4 +18,4 @@ class Util(webapp.RequestHandler) :
     self.response.headers['Content-Type'] = 'text/plain'
     self.response.out.write("util:")
     self.response.out.write(self.request.query_string)
-    
+ 

@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Journals
+  properties:
+  - name: publishing_code
+  - name: rownum
+    direction: desc
+
 - kind: Shouts
   properties:
   - name: rownum

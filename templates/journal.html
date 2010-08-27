@@ -24,14 +24,14 @@
 	<div id="journals">
 		
 		{% for journal in journals %}
-			{{ journal.comment }}
+			<div id="journal">
+				<div id="date">2010.07.01</div> <div id="time">17:35</div> <div id="timezone">MST</div>
+				<div id="tag">[Scratch]</div>
+				<div id="subject">{{ journal.subject }}</div>
+			</div>
 		{% endfor %}
 		
-		<div id="journal">
-		<div id="date">2010.07.01</div> <div id="time">17:35</div> <div id="timezone">MST</div>
-		<div id="tag">[Scratch]</div>
-		<div id="subject">&quot;만날 사람은 어떻게든 만나게 되나바요&quot; - 아는 사람</div>
-		</div>
+		
 		
 		<div id="journals_added"/>
 	</div> 
