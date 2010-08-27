@@ -11,6 +11,7 @@ application = webapp.WSGIApplication([
     (r'/j/',Journal),
     #(r'/j/write',Journal),
     (r'/shout', Shout),
+    (r'/shout/(.*)', Shout),
     (r'/util', Util),
 ], debug=True) 
 

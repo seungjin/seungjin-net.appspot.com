@@ -9,20 +9,36 @@ import settings
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
+import wsgiref.util
 
 from models.tables import *
   
 class Shout(webapp.RequestHandler) :
 
-  def get(self):
-    shouts = db.GqlQuery("SELECT * FROM Shouts ORDER BY created_at DESC")
-    template_values = {
-      'date': datetime.datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y"),
-      'shouts': shouts
-    }
-    path = os.path.join(settings.APP_ROOT_PATH,"./templates/shout.html")
-    self.response.out.write(template.render(path, template_values))
-
+  def get(self,rownum = None):
+    if (rownum is None or rownum is "") :
+      shouts = db.GqlQuery("SELECT * FROM Shouts ORDER BY created_at DESC")
+      template_values = {
+        'date': datetime.datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y"),
+        'shouts': shouts,
+        'this_resource' : "http://" + self.request.headers.get('host', 'no host') + "/shout/"
+      }
+      path = os.path.join(settings.APP_ROOT_PATH,"./templates/shout/index.html")
+      self.response.out.write(template.render(path, template_values))
+    else:
+      shouts = Shouts.gql("WHERE rownum = " +rownum)
+      
+      #print self.request.headers.get('host', 'no host')
+      #print wsgiref.util.request_uri(self.request.environ)
+      
+      template_values = {
+        'date': datetime.datetime.now().strftime("%a %b %d %H:%M:%S %Z %Y"),
+        'shouts': shouts,
+        'this_resource' : "http://" + self.request.headers.get('host', 'no host') + "/shout/" + rownum
+      }
+      path = os.path.join(settings.APP_ROOT_PATH,"./templates/shout/read.html")
+      self.response.out.write(template.render(path, template_values))
+      
   def post(self):
     
     # need to start a transaction
