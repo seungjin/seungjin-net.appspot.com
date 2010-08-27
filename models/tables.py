@@ -1,7 +1,7 @@
 
 
 from google.appengine.ext import db
-
+  
 class Journals(db.Model):
   rownum = db.IntegerProperty()
   date = db.DateProperty()
@@ -16,9 +16,10 @@ class Journals(db.Model):
   updated_at = db.DateTimeProperty()
 
 class Access_logs(db.Model):
-  timestamp = db.DateTimeProperty()
+  rownum = db.IntegerProperty()
+  timestamp = db.DateTimeProperty(auto_now_add=True)
   timezone = db.StringProperty()
-  remote_ip = db.StringProperty()
+  remote_addr = db.StringProperty()
   user_agent = db.StringProperty()
   url = db.StringProperty()
   http_referer = db.StringProperty()
