@@ -21,7 +21,7 @@
     <div id="shouts">
      
       {% for shout in shouts %}
-		<pre>{{ shout.message }}<br/>[Written at {{ shout.created_at }} UTC]<br/>[Link: <a href={{ this_resource }}{{shout.rownum}}>{{ this_resource }}{{shout.rownum}}</a>]</pre>
+		<pre>{{ shout.message }}<br/><br/>[Written at {{ shout.created_at }} UTC]<br/>[Link: <a href={{ this_resource }}{{shout.rownum}}>{{ this_resource }}{{shout.rownum}}</a>]</pre>
 	  {% endfor %}
     
     </div>
