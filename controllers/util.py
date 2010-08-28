@@ -18,4 +18,8 @@ class Util(webapp.RequestHandler) :
     self.response.headers['Content-Type'] = 'text/plain'
     self.response.out.write("util:")
     self.response.out.write(self.request.query_string)
+    #q = db.GqlQuery("SELECT __key__ FROM Journals")
+    #results = q.fetch(100)
+    #db.delete(results)
+    
  
