@@ -18,4 +18,3 @@ class Util(webapp.RequestHandler) :
     self.response.headers['Content-Type'] = 'text/plain'
     self.response.out.write("util:")
     self.response.out.write(self.request.query_string)
- 
